@@ -1,17 +1,13 @@
-/*
-FIX ME (types) 😭
-*/
-export const ensureAuthenticated = (req: any, res: any, next: any) => {
+import Express from 'express';
+
+export const ensureAuthenticated = (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
   if (req.isAuthenticated()) {
     return next();
   }
   res.redirect("/auth/login");
 }
 
-/*
-FIX ME (types) 😭
-*/
-export const forwardAuthenticated = (req: any, res: any, next: any) => {
+export const forwardAuthenticated = (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
     if (!req.isAuthenticated()) {
       return next();
     }

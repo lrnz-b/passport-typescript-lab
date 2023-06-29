@@ -9,26 +9,32 @@ const localStrategy = new LocalStrategy(
     passwordField: "password",
   },
   (email, password, done) => {
-    const user = getUserByEmailIdAndPassword(email, password);
-    return user
-      ? done(null, user)
-      : done(null, false, {
-          message: "Your login details are not valid. Please try again",
-        });
+    try {
+      const user = getUserByEmailIdAndPassword(email, password);
+      return done(null, user);
+    }
+    catch(err: any) {
+      return done(null, false, {
+        message: err.message
+      });
+    }
+    
   }
 );
 
-/*
-FIX ME (types) 😭
-*/
-passport.serializeUser(function (user: any, done: any) {
+declare global {
+  namespace Express {
+    interface User {
+      id: number;
+    }
+  }
+}
+
+passport.serializeUser(function (user: Express.User, done: (err: any, id?: unknown) => void) {
   done(null, user.id);
 });
 
-/*
-FIX ME (types) 😭
-*/
-passport.deserializeUser(function (id: any, done: any) {
+passport.deserializeUser(function (id: number, done: (err: any, user?: false | Express.User | null | undefined) => void) {
   let user = getUserById(id);
   if (user) {
     done(null, user);
