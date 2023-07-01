@@ -25,7 +25,12 @@ const isUserValid = (user: any, password: string) => {
 }
 
 const createUser = (user: any) => {
-  userModel.addUser(user.id, user.name, user.email, user.password);
+  userModel.addUser(
+    user.id, 
+    user.type,
+    user.name, 
+    user.email, user.
+    password);
 }
 
 export {

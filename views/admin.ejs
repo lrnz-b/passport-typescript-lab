@@ -1,0 +1,20 @@
+<h1>Dashboard</h1>
+<p class="pb-2">Welcome <%= name %></p>
+<p>Current Active Sessions:</p>
+<ul>
+<% sessions.forEach(function(session) { %>
+  <li>
+    <div>SessionID: <%= session.sessionId %></div>
+    <div>UserID: <%= session.userId%></div>
+    <form action="/admin/revoke" method="POST">
+      <input 
+        type="hidden" 
+        id="targetSessionId"
+        name="targetSessionId"
+        value="<%= session.sessionId %>"
+      >
+      <button type="submit">Revoke</button>
+    </form>
+  </li>
+<% }) %>
+</ul>

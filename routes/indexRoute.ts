@@ -14,4 +14,39 @@ router.get("/dashboard", ensureAuthenticated, (req: any, res) => {
   });
 });
 
+router.get("/admin", ensureAuthenticated, (req: any, res) => {
+    if (req.user.type === 'admin') {
+      req.sessionStore.all((err: any, sessions: any) => {
+        if(err) {
+          console.log(err)
+        }
+        else {
+          const sessObj:any = [];
+          const keys = Object.keys(sessions);
+          keys.forEach((key:any) => {
+            sessObj.push({sessionId: key, userId: sessions[key].passport.user});
+          });
+          res.render("admin", { sessions: sessObj, name: req.user.name });
+        }
+      });
+    }
+    else {
+      res.redirect("/dashboard");
+    }
+  }
+);
+
+router.post("/admin/revoke", (req: any, res) => {
+  const targetSessionId = req.body.targetSessionId;
+  req.sessionStore.destroy(targetSessionId, (err: any) => {
+    if (err) {
+      console.log(err);
+    }
+    else {
+      console.log("User session destroyed")
+    }
+  })
+  res.redirect("/admin");
+})
+
 export default router;

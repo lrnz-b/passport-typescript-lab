@@ -8,7 +8,7 @@ export const ensureAuthenticated = (req: Express.Request, res: Express.Response,
 }
 
 export const forwardAuthenticated = (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
-    if (!req.isAuthenticated()) {
+  if (!req.isAuthenticated()) {
       return next();
     }
     res.redirect("/dashboard");

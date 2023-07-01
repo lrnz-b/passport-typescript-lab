@@ -10,7 +10,6 @@ const githubStrategy: GitHubStrategy = new GitHubStrategy(
     passReqToCallback: true,
   },
     
-    /* FIX ME 😭 */
   async (
     req: any, 
     accessToken: any, 
@@ -22,7 +21,7 @@ const githubStrategy: GitHubStrategy = new GitHubStrategy(
         done(null, user);
       }
       catch {
-        const newUser = {id: profile._json.id, name: profile._json.name, email: '', password: ''};
+        const newUser = {id: profile._json.id, type: 'user', name: profile._json.name, email: '', password: ''};
         createUser(newUser);
         done(null, newUser);
       }
