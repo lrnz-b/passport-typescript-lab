@@ -11,7 +11,8 @@ const getUserByEmailIdAndPassword = (email: string, password: string) => {
     }
   }
 };
-const getUserById = (id:any) => {
+
+const getUserById = (id: any) => {
   let user = userModel.findById(id);
   if (user) {
     return user;
@@ -19,11 +20,16 @@ const getUserById = (id:any) => {
   return null;
 };
 
-function isUserValid(user: any, password: string) {
+const isUserValid = (user: any, password: string) => {
   return user.password === password;
+}
+
+const createUser = (user: any) => {
+  userModel.addUser(user.id, user.name, user.email, user.password);
 }
 
 export {
   getUserByEmailIdAndPassword,
   getUserById,
+  createUser
 };

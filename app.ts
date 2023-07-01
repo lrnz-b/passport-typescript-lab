@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from "express";
 import expressLayouts from "express-ejs-layouts";
 import session from "express-session";
